@@ -10,7 +10,9 @@
 		{
 			"uuid": "0fdd5149-32fa-4530-8183-3ab246f94a9b",
 			"title": "Todo",
-			"tasks": []
+			"tasks": [
+				"d3a8db8f-fe11-4d4c-9035-6093120fbf71"
+			]
 		},
 		{
 			"uuid": "ad73f86c-e742-426e-9009-59f506be9e75",
@@ -326,6 +328,13 @@
 		{
 			"uuid": "c024dc26-e035-4ff1-957a-51c09180dc89",
 			"title": "Make Endless Goal Flash When Ready",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "d3a8db8f-fe11-4d4c-9035-6093120fbf71",
+			"title": "Taunts",
 			"description": "",
 			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
 			"steps": []

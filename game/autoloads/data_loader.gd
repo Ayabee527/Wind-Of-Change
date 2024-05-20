@@ -75,8 +75,9 @@ func check_compatibility(version: String) -> String:
 			
 			var username = config.get_value(USER_NAME, "username")
 			
-			Global.past_username = username
-			config.set_value(USER_NAME, "past_username", Global.past_username)
+			if "past_username" in Global:
+				Global.past_username = username
+				config.set_value(USER_NAME, "past_username", Global.past_username)
 			
 			var endless_highs = config.get_value(USER_NAME, "endless_highscores")
 			var bullet_highs = config.get_value(USER_NAME, "bullet_highscores")
@@ -134,10 +135,7 @@ func check_compatibility(version: String) -> String:
 
 func save_config() -> void:
 	var config = ConfigFile.new()
-	var error = config.load(SAVE_PATH)
-	
-	if error != OK:
-		return
+	config.load(SAVE_PATH)
 	
 	config.set_value(USER_NAME, "game_version", CURRENT_GAME_VERSION)
 	
@@ -188,7 +186,7 @@ func load_config() -> void:
 	var save_version: String = "1.0.0"
 	
 	if error != OK:
-		save_version = "1.0.0"
+		save_version = "NO SAVE"
 	else:
 		save_version = config.get_value(USER_NAME, "game_version")
 	

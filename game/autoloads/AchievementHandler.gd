@@ -60,7 +60,22 @@ var ACHIEVEMENTS = {
 	
 	"IT'S OVER X50!": {
 		"completed": false,
-		"description": "Get max multiplier (x50) in an endless run!"
+		"description": "Get max multiplier (x50) in an endless run."
+	},
+	
+	"Close Call!": {
+		"completed": false,
+		"description": "Hit the goal with less than a second to spare."
+	},
+	
+	"Living Dangerously!": {
+		"completed": false,
+		"description": "Hit the goal with less than a second to spare 3 times."
+	},
+	
+	"Don't Get Too Excited!": {
+		"completed": false,
+		"description": "Bounce of the walls 10 times before starting an endless run."
 	},
 	
 	# BULLET HELL
@@ -161,7 +176,8 @@ const ENDLESS_ACHIEVEMENTS = [
 	"Okay, You're Pretty Good!", "Okay, You're Very Good!", "Okay, You're Very Good!",
 	"Okay, You're Too Good!", "Okay, You Can Stop Now!", "Tryhard!",
 	"Maybe You Should Go Outside!", "They're In The Walls!", "Very Nice!",
-	"IT'S OVER X50!"
+	"IT'S OVER X50!", "Close Call!", "Living Dangerously!",
+	"Don't Get Too Excited!"
 ]
 const BULLETHELL_ACHIEVEMENTS = [
 	"Straight Up Ballin!", "Flashing Before My Eyes!", "That One Hurt!",
@@ -189,7 +205,12 @@ var ball_hits: int = 0:
 			if wall_hits == 0:
 				complete("They're In The Walls!")
 var score: int = 0
-var wall_hits: int = 0
+var wall_hits: int = 0:
+	set(new_wall_hits):
+		wall_hits = new_wall_hits
+		if wall_hits == 10:
+			if ball_hits == 0:
+				complete("Don't Get Too Excited!")
 
 var bullet_score: int = 0
 

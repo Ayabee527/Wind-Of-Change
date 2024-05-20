@@ -31,6 +31,8 @@ var time_alive: int = 0
 var game_overed: bool = false
 var updating_score: bool = false
 
+var close_calls: int = 0
+
 func _ready() -> void:
 	window = get_window()
 	used_screen = DisplayServer.window_get_current_screen(window.get_window_id())
@@ -137,6 +139,12 @@ func _on_player_goal_collected() -> void:
 		time_timer.start()
 	
 	AchievementHandler.ball_hits += 1
+	
+	if life_timer.time_left < 1.0 and player_goal.combo > 1:
+		AchievementHandler.complete("Close Call!")
+		close_calls += 1
+		if close_calls == 3:
+			AchievementHandler.complete("Living Dangerously!")
 	
 	life_timer.start(12)
 	wind_momma.wind_speed = 0.0
