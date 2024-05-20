@@ -1,0 +1,509 @@
+[gd_scene load_steps=27 format=3 uid="uid://dtffmmmmtbg8r"]
+
+[ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_4r7go"]
+[ext_resource type="Script" path="res://main_menu/wind_holder.gd" id="1_d3t3r"]
+[ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_of1rs"]
+[ext_resource type="Script" path="res://endless/achieve_popper/achieve_popper.gd" id="4_osxwd"]
+[ext_resource type="AudioStream" uid="uid://cujcp3l4en5m4" path="res://assets/music/wind-of-change.ogg" id="4_wm8vi"]
+[ext_resource type="PackedScene" uid="uid://cmamu5udwoaqb" path="res://main_menu/options/options_menu.tscn" id="4_y87sg"]
+[ext_resource type="PackedScene" uid="uid://c24up3gigjdps" path="res://main_menu/achievement_menu/achieves_menu.tscn" id="5_1e1bo"]
+[ext_resource type="AudioStream" uid="uid://b82ilmqxmlcla" path="res://assets/sounds/1up.wav" id="5_cp7sa"]
+[ext_resource type="Script" path="res://main_menu/mode_menu.gd" id="8_2jq52"]
+[ext_resource type="PackedScene" uid="uid://ci6nldk5pf48q" path="res://main_menu/stats/stats_menu.tscn" id="8_sik18"]
+[ext_resource type="PackedScene" uid="uid://lmdkqsrww7lr" path="res://main_menu/online/online_menu.tscn" id="10_6sess"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jdj60"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cxlch"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g825x"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.25098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jhgke"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.501961)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3oyjb"]
+bg_color = Color(0, 0, 0, 0.87451)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_extpj"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u48kh"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_payqm"]
+bg_color = Color(1, 1, 1, 0.25098)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0vn64"]
+bg_color = Color(1, 1, 1, 0.501961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3a0h8"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kehc6"]
+bg_color = Color(1, 1, 1, 0.25098)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72t3i"]
+bg_color = Color(1, 1, 1, 0.501961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2an2t"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w0i15"]
+bg_color = Color(1, 1, 1, 0.25098)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6wrpi"]
+bg_color = Color(1, 1, 1, 0.501961)
+
+[node name="MainMenu" type="PanelContainer" node_paths=PackedStringArray("quit_butt", "options_menu", "achieves_menu", "stats_menu", "mode_menu", "online_menu")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jdj60")
+script = ExtResource("1_4r7go")
+quit_butt = NodePath("CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Quit")
+options_menu = NodePath("OptionsMenu")
+achieves_menu = NodePath("AchievesMenu")
+stats_menu = NodePath("StatsMenu")
+mode_menu = NodePath("ModeMenu")
+online_menu = NodePath("OnlineMenu")
+
+[node name="WindHolder" type="Node2D" parent="."]
+script = ExtResource("1_d3t3r")
+
+[node name="WindTimer" type="Timer" parent="WindHolder"]
+wait_time = 2.5
+autostart = true
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer/VBoxContainer"]
+clip_contents = false
+layout_mode = 2
+theme_override_constants/line_separation = 8
+theme_override_fonts/normal_font = ExtResource("1_of1rs")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[wave amp=16 freq=25][center]WIND OF
+CHANGE"
+fit_content = true
+autowrap_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Tutorial" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
+text = "TUTORIAL"
+
+[node name="Play" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
+text = "PLAY"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Options" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
+text = "OPTIONS"
+
+[node name="Achieves" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
+text = "Achievements"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Stats" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
+text = "Stats"
+
+[node name="Quit" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
+text = "DON'T PLAY"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="Arrow1" type="RichTextLabel" parent="MarginContainer/HBoxContainer"]
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_of1rs")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[wave][rainbow sat=0.5]->"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Leaderboards" type="LinkButton" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "LEADERBOARDS"
+
+[node name="Arrow2" type="RichTextLabel" parent="MarginContainer/HBoxContainer"]
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_of1rs")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[wave][rainbow sat=0.5]<-"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Version" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "version 1.1.2"
+
+[node name="Credits" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "made by pixemisti"
+
+[node name="AchievePopper" type="VBoxContainer" parent="MarginContainer" node_paths=PackedStringArray("achieve_sound")]
+layout_mode = 2
+size_flags_vertical = 0
+script = ExtResource("4_osxwd")
+achieve_sound = NodePath("Achieve")
+
+[node name="Achieve" type="AudioStreamPlayer" parent="MarginContainer/AchievePopper"]
+stream = ExtResource("5_cp7sa")
+volume_db = -5.0
+pitch_scale = 2.0
+bus = &"sfx"
+
+[node name="OptionsMenu" parent="." instance=ExtResource("4_y87sg")]
+visible = false
+layout_mode = 2
+
+[node name="AchievesMenu" parent="." instance=ExtResource("5_1e1bo")]
+visible = false
+layout_mode = 2
+
+[node name="StatsMenu" parent="." instance=ExtResource("8_sik18")]
+visible = false
+layout_mode = 2
+
+[node name="ModeMenu" type="PanelContainer" parent="." node_paths=PackedStringArray("bullet_hell", "bullet_hell_button", "bullet_hell_description")]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3oyjb")
+script = ExtResource("8_2jq52")
+bullet_hell = NodePath("MarginContainer/VBoxContainer/HBoxContainer/BulletHell")
+bullet_hell_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/BulletHell/BulletHell")
+bullet_hell_description = NodePath("MarginContainer/VBoxContainer/HBoxContainer/BulletHell/MarginContainer/VBoxContainer/Description")
+
+[node name="MarginContainer" type="MarginContainer" parent="ModeMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Label" type="Label" parent="ModeMenu/MarginContainer"]
+custom_minimum_size = Vector2(192, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 16
+text = "CHOOSE YOUR GAMEMODE!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ModeMenu/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="Endless" type="PanelContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_extpj")
+
+[node name="Endless" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless"]
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_u48kh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_payqm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0vn64")
+
+[node name="MarginContainer" type="MarginContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="Name" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "ENDLESS"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "RACK UP YOUR HIGHSCORE!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BulletHell" type="PanelContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_extpj")
+
+[node name="BulletHell" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell"]
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3a0h8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kehc6")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_72t3i")
+
+[node name="MarginContainer" type="MarginContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="Name" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "BULLET HELL"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "SURVIVE AN ONSLAUGHT!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="RogueLite" type="PanelContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2"]
+modulate = Color(0.25098, 0.25098, 0.25098, 1)
+custom_minimum_size = Vector2(108, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/panel = SubResource("StyleBoxFlat_extpj")
+
+[node name="RogueLite" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite"]
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2an2t")
+theme_override_styles/hover = SubResource("StyleBoxFlat_w0i15")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6wrpi")
+disabled = true
+
+[node name="MarginContainer" type="MarginContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="Name" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "ARENA"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "COMING SOON!!!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Back" type="Button" parent="ModeMenu/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
+text = "BACK"
+
+[node name="OnlineMenu" parent="." instance=ExtResource("10_6sess")]
+visible = false
+layout_mode = 2
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_wm8vi")
+autoplay = true
+bus = &"music"
+
+[connection signal="timeout" from="WindHolder/WindTimer" to="WindHolder" method="_on_wind_timer_timeout"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer/Tutorial" to="." method="_on_tutorial_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Achieves" to="." method="_on_achieves_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Stats" to="." method="_on_stats_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Leaderboards" to="." method="_on_leaderboards_pressed"]
+[connection signal="confirmed" from="OptionsMenu" to="." method="_on_options_menu_confirmed"]
+[connection signal="back" from="AchievesMenu" to="." method="_on_achieves_menu_back"]
+[connection signal="back" from="StatsMenu" to="." method="_on_stats_menu_back"]
+[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless/Endless" to="ModeMenu" method="_on_endless_pressed"]
+[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell/BulletHell" to="ModeMenu" method="_on_bullet_hell_pressed"]
+[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite/RogueLite" to="ModeMenu" method="_on_rogue_lite_pressed"]
+[connection signal="pressed" from="ModeMenu/MarginContainer/Back" to="ModeMenu" method="_on_back_pressed"]
+[connection signal="back" from="OnlineMenu" to="." method="_on_online_menu_back"]
