@@ -102,8 +102,6 @@ func contain_window() -> void:
 		window_velocity.y *= bounce_factor
 
 func collect_goal() -> void:
-	goal.mad = false
-	goal.really_mad = false
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(

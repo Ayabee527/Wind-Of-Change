@@ -112,7 +112,32 @@ var ACHIEVEMENTS = {
 	
 	"Help! A Stalker!": {
 		"completed": false,
-		"description": "Evade the goal for 20 seconds!"
+		"description": "Evade the goal for 15 seconds in a bullet-hell run."
+	},
+	
+	"It's Trying To Touch Me!": {
+		"completed": false,
+		"description": "Evade the goal for 30 seconds in a bullet-hell run."
+	},
+	
+	"Around And Around We Go!": {
+		"completed": false,
+		"description": "Evade the goal for 45 seconds in a bullet-hell run."
+	},
+	
+	"Bad Karma!": {
+		"completed": false,
+		"description": "Activate a karma round in a bullet-hell run."
+	},
+	
+	"Who Needs Good Karma Anyways!": {
+		"completed": false,
+		"description": "Survive a karma round in a bullet-hell run."
+	},
+	
+	"What Goes Around Comes Around!": {
+		"completed": false,
+		"description": "Die to a karma round in a bullet-hell run."
 	},
 	
 	"Waste No Time!": {
@@ -123,6 +148,11 @@ var ACHIEVEMENTS = {
 	"Fake Out!": {
 		"completed": false,
 		"description": "Clash with a clone of you 6 times."
+	},
+	
+	"Min-Maxing!": {
+		"completed": false,
+		"description": "Last more than 10 minutes in a bullet-hell run."
 	},
 }
 
@@ -137,7 +167,9 @@ const BULLETHELL_ACHIEVEMENTS = [
 	"Straight Up Ballin!", "Flashing Before My Eyes!", "That One Hurt!",
 	"Bullets, No Brains!", "Slippery Fella!", "Untouchable!",
 	"Bullets No, Brains!", "SO MUCH RED!", "Can't Touch This!",
-	"Help! A Stalker!", "Waste No Time!", "Fake Out!"
+	"Help! A Stalker!", "It's Trying To Touch Me!", "Around And Around We Go!",
+	"Bad Karma!", "Who Needs Good Karma Anyways!", "What Goes Around Comes Around!",
+	"Waste No Time!", "Fake Out!", "Min-Maxing!"
 ]
 
 var ACHIEVEMENT_KEYS: Array
@@ -248,6 +280,8 @@ func load_achievements() -> void:
 		complete("SO MUCH RED!")
 	if bullet_high >= 360:
 		complete("Can't Touch This!")
+	if bullet_high >= 600:
+		complete("Min-Maxing!")
 
 func complete(achievement: String) -> void:
 	if not ACHIEVEMENTS[achievement]["completed"]:
@@ -301,3 +335,5 @@ func check_bullet_gameover() -> void:
 		complete("SO MUCH RED!")
 	if bullet_score >= 360:
 		complete("Can't Touch This!")
+	if bullet_score >= 600:
+		complete("Min-Maxing!")

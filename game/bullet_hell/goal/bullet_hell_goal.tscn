@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="1_tv4ga"]
 [ext_resource type="AudioStream" uid="uid://bu3x6qlggbhka" path="res://assets/sounds/wewewewe.wav" id="3_b4x47"]
 [ext_resource type="AudioStream" uid="uid://d0i67nhh1aq0o" path="res://assets/sounds/3up.wav" id="4_qq36h"]
-[ext_resource type="AudioStream" uid="uid://b82ilmqxmlcla" path="res://assets/sounds/1up.wav" id="5_nbl15"]
+[ext_resource type="AudioStream" uid="uid://beh8xlwqswov8" path="res://assets/sounds/excited.wav" id="5_pb20t"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hkmxs"]
 rough = true
@@ -58,10 +58,10 @@ stream_0/weight = 1.0
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_otihg"]
 random_pitch = 1.15
 streams_count = 1
-stream_0/stream = ExtResource("5_nbl15")
+stream_0/stream = ExtResource("5_pb20t")
 stream_0/weight = 1.0
 
-[node name="BulletHellGoal" type="RigidBody2D" node_paths=PackedStringArray("evade_timer", "shape", "ring", "collision", "player_zone_collision", "collect_sound", "ready_sound", "mad_sound", "really_mad_sound")]
+[node name="BulletHellGoal" type="RigidBody2D" node_paths=PackedStringArray("evade_timer_one", "evade_timer_two", "evade_timer_three", "shape", "ring", "collision", "player_zone_collision", "collect_sound", "ready_sound", "mad_sound", "really_mad_sound")]
 collision_layer = 16
 collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_hkmxs")
@@ -70,7 +70,9 @@ max_contacts_reported = 4
 contact_monitor = true
 constant_torque = 200.0
 script = ExtResource("1_6swtt")
-evade_timer = NodePath("EvadeTimer")
+evade_timer_one = NodePath("EvadeTimer1")
+evade_timer_two = NodePath("EvadeTimer2")
+evade_timer_three = NodePath("EvadeTimer3")
 shape = NodePath("Shape")
 ring = NodePath("Ring")
 collision = NodePath("CollisionShape2D")
@@ -117,10 +119,20 @@ stream = SubResource("AudioStreamRandomizer_otihg")
 pitch_scale = 0.15
 bus = &"sfx"
 
-[node name="EvadeTimer" type="Timer" parent="."]
-wait_time = 20.0
+[node name="EvadeTimer1" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+
+[node name="EvadeTimer2" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+
+[node name="EvadeTimer3" type="Timer" parent="."]
+wait_time = 45.0
 one_shot = true
 
 [connection signal="area_entered" from="PlayerZone" to="." method="_on_player_zone_area_entered"]
 [connection signal="body_entered" from="PlayerZone" to="." method="_on_player_zone_body_entered"]
-[connection signal="timeout" from="EvadeTimer" to="." method="_on_evade_timer_timeout"]
+[connection signal="timeout" from="EvadeTimer1" to="." method="_on_evade_timer_1_timeout"]
+[connection signal="timeout" from="EvadeTimer2" to="." method="_on_evade_timer_2_timeout"]
+[connection signal="timeout" from="EvadeTimer3" to="." method="_on_evade_timer_3_timeout"]

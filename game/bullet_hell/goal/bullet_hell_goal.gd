@@ -7,7 +7,9 @@ signal activated()
 @export var stun_time: float = 10.0
 
 @export_group("Inner Dependencies")
-@export var evade_timer: Timer
+@export var evade_timer_one: Timer
+@export var evade_timer_two: Timer
+@export var evade_timer_three: Timer
 @export var shape: Polygon2D
 @export var ring: GPUParticles2D
 @export var collision: CollisionShape2D
@@ -38,11 +40,13 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	
 	add_constant_central_force(wind_momma.wind_direction * wind_momma.wind_speed)
-	evade_timer.start()
+	#evade_timer_one.start()
+	#evade_timer_two.start()
+	#evade_timer_three.start()
 
 func _physics_process(delta: float) -> void:
 	if active:
-		magnetize += delta
+		magnetize += delta * 0.65
 	
 	magnetize_to_player(delta)
 
@@ -72,9 +76,11 @@ func collect() -> void:
 	if dead:
 		return
 	
-	if evade_timer.wait_time - evade_timer.time_left <= 0.25:
+	if evade_timer_one.wait_time - evade_timer_one.time_left <= 0.25:
 		AchievementHandler.complete("Waste No Time!")
-	evade_timer.stop()
+	evade_timer_one.stop()
+	evade_timer_two.stop()
+	evade_timer_three.stop()
 	
 	active = false
 	magnetize = 0.0
@@ -85,6 +91,8 @@ func collect() -> void:
 	
 	collect_sound.play()
 	collected.emit()
+	mad = false
+	really_mad = false
 	
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
@@ -105,7 +113,9 @@ func collect() -> void:
 	player_zone_collision.set_deferred("disabled", false)
 	activated.emit()
 	active = true
-	evade_timer.start()
+	evade_timer_one.start()
+	evade_timer_two.start()
+	evade_timer_three.start()
 
 func die() -> void:
 	collision.set_deferred("disabled", true)
@@ -134,5 +144,13 @@ func _on_player_zone_area_entered(area: Area2D) -> void:
 		)
 
 
-func _on_evade_timer_timeout() -> void:
+func _on_evade_timer_1_timeout() -> void:
 	AchievementHandler.complete("Help! A Stalker!")
+
+
+func _on_evade_timer_2_timeout() -> void:
+	AchievementHandler.complete("It's Trying To Touch Me!")
+
+
+func _on_evade_timer_3_timeout() -> void:
+	AchievementHandler.complete("Around And Around We Go!")

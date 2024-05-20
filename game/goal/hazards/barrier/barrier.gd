@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+@export var follow_speed: float = 1000.0
+
 @export var shape: Node2D
 @export var trail: Trail
 @export var collision_shape: CollisionShape2D
@@ -12,15 +14,26 @@ extends RigidBody2D
 
 var wind_momma: WindMomma
 
+var player: Player
+
 func _ready() -> void:
+	player = get_tree().get_first_node_in_group("player")
+	
 	wind_momma = get_tree().get_first_node_in_group("wind_momma")
 	wind_momma.wind_updated.connect(update_wind)
 	
 	add_constant_central_force(wind_momma.wind_direction * wind_momma.wind_speed)
 	
-	angular_velocity = randf_range(-TAU * 2.0, TAU * 2.0)
+	global_rotation = TAU * randf()
 	
 	freeze_timer.start()
+
+func _physics_process(delta: float) -> void:
+	var dir_to_player := global_position.direction_to(player.global_position)
+	
+	apply_central_force(
+		dir_to_player * follow_speed
+	)
 
 func die() -> void:
 	barrier_collision.set_deferred("disabled", true)

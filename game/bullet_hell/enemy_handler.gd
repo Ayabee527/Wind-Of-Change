@@ -46,8 +46,11 @@ const EXPLOSION_COST = 3
 
 @export var enemy_spawner: PathFollow2D
 @export var projectile_spawner: Marker2D
+@export var goal: BulletHellGoal
+@export var karma_label: RichTextLabel
 
 var progress: int = 0
+var karma: bool = false
 
 func clear_hazards() -> void:
 	var owies = get_tree().get_nodes_in_group("owies")
@@ -154,7 +157,34 @@ func spawn_hazards() -> void:
 		get_tree().current_scene.add_child(hazard)
 
 func _on_bullet_hell_goal_collected() -> void:
-	progress += 1
+	if goal.really_mad:
+		if not karma:
+			AchievementHandler.complete("Bad Karma!")
+			progress += 2
+			karma = true
+			karma_label.show()
+			
+			print_rich("[wave][color=yellow]Progress: ", progress)
+			
+			clear_hazards()
+			spawn_hazards()
+			
+			return
+	else:
+		progress += 1
+	
+	if karma:
+		progress -= 2
+		karma = false
+		karma_label.hide()
+		AchievementHandler.complete("Who Needs Good Karma Anyways!")
+	
+	print_rich("[wave][color=yellow]Progress: ", progress)
 	
 	clear_hazards()
 	spawn_hazards()
+
+
+func _on_bullet_hell_game_over() -> void:
+	if karma:
+		AchievementHandler.complete("What Goes Around Comes Around!")

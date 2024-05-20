@@ -64,8 +64,10 @@ func handle_endless_highs() -> void:
 		if a[0] > b[0]:
 			return true
 		elif a[0] == b[0]:
-			if a[1] > b[1]:
+			if a[1] < b[1]:
 				return true
+			else:
+				return false
 		else:
 			return false
 	
