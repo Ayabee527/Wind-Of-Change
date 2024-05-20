@@ -1,19 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://j5ampglym1at"]
+[gd_scene load_steps=16 format=3 uid="uid://j5ampglym1at"]
 
 [ext_resource type="Script" path="res://goal/player_goal.gd" id="1_pwn1o"]
 [ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="2_ek0ph"]
 [ext_resource type="AudioStream" uid="uid://ds8emyev6w6pm" path="res://assets/sounds/explod.wav" id="3_kyjss"]
 [ext_resource type="AudioStream" uid="uid://bigqmw32qq7sh" path="res://assets/sounds/2up.wav" id="4_yyl1y"]
+[ext_resource type="AudioStream" uid="uid://c7ud4vs4e7x3m" path="res://assets/sounds/ready2.wav" id="5_ltnnx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2tyrj"]
 rough = true
 bounce = 0.9
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_hq080"]
-radius = 16.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_oekn7"]
-radius = 24.0
 
 [sub_resource type="Curve" id="Curve_mou8y"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.106667, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -22,13 +17,29 @@ point_count = 3
 [sub_resource type="CurveTexture" id="CurveTexture_8wlu4"]
 curve = SubResource("Curve_mou8y")
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ng3gv"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+damping_max = 150.0
+scale_min = 0.05
+scale_max = 0.25
+scale_curve = SubResource("CurveTexture_8wlu4")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hq080"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oekn7"]
+radius = 24.0
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d03xg"]
 particle_flag_disable_z = true
 spread = 180.0
 initial_velocity_min = 50.0
 initial_velocity_max = 150.0
 gravity = Vector3(0, 0, 0)
-damping_min = 50.0
 damping_max = 150.0
 scale_min = 0.05
 scale_max = 0.25
@@ -48,7 +59,14 @@ streams_count = 1
 stream_0/stream = ExtResource("4_yyl1y")
 stream_0/weight = 1.0
 
-[node name="PlayerGoal" type="RigidBody2D" node_paths=PackedStringArray("stun_timer", "shape", "collision", "player_collision", "collect_particles", "explod_sound", "yipee_sound")]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nk8yy"]
+random_pitch = 1.1
+random_volume_offset_db = 5.0
+streams_count = 1
+stream_0/stream = ExtResource("5_ltnnx")
+stream_0/weight = 1.0
+
+[node name="PlayerGoal" type="RigidBody2D" node_paths=PackedStringArray("stun_timer", "shape", "collision", "player_collision", "collect_particles", "ready_particles", "explod_sound", "yipee_sound", "ready_sound")]
 collision_layer = 16
 physics_material_override = SubResource("PhysicsMaterial_2tyrj")
 gravity_scale = 0.0
@@ -59,8 +77,18 @@ shape = NodePath("Shape")
 collision = NodePath("CollisionShape2D")
 player_collision = NodePath("PlayerZone/CollisionShape2D")
 collect_particles = NodePath("CollectParticles")
+ready_particles = NodePath("ReadyParticles")
 explod_sound = NodePath("Explod")
 yipee_sound = NodePath("Yipee")
+ready_sound = NodePath("Ready")
+
+[node name="ReadyParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_ng3gv")
+texture = ExtResource("2_ek0ph")
+one_shot = true
+explosiveness = 1.0
 
 [node name="Shape" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-14, -8, -8, -14, 0, -16, 8, -14, 14, -8, 16, 0, 14, 8, 8, 14, 0, 16, -8, 14, -14, 8, -16, 0)
@@ -112,6 +140,11 @@ bus = &"sfx"
 stream = SubResource("AudioStreamRandomizer_dobcb")
 volume_db = 10.0
 pitch_scale = 0.75
+bus = &"sfx"
+
+[node name="Ready" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_nk8yy")
+volume_db = 5.0
 bus = &"sfx"
 
 [connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]

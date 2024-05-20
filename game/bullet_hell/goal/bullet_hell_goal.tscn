@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://dukoklh1ovyrc"]
+[gd_scene load_steps=16 format=3 uid="uid://dukoklh1ovyrc"]
 
 [ext_resource type="Script" path="res://bullet_hell/goal/bullet_hell_goal.gd" id="1_6swtt"]
 [ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="1_tv4ga"]
 [ext_resource type="AudioStream" uid="uid://bu3x6qlggbhka" path="res://assets/sounds/wewewewe.wav" id="3_b4x47"]
 [ext_resource type="AudioStream" uid="uid://d0i67nhh1aq0o" path="res://assets/sounds/3up.wav" id="4_qq36h"]
+[ext_resource type="AudioStream" uid="uid://b82ilmqxmlcla" path="res://assets/sounds/1up.wav" id="5_nbl15"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hkmxs"]
 rough = true
@@ -48,7 +49,19 @@ streams_count = 1
 stream_0/stream = ExtResource("4_qq36h")
 stream_0/weight = 1.0
 
-[node name="BulletHellGoal" type="RigidBody2D" node_paths=PackedStringArray("evade_timer", "shape", "ring", "collision", "player_zone_collision", "collect_sound", "ready_sound")]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_36p7w"]
+random_pitch = 1.15
+streams_count = 1
+stream_0/stream = ExtResource("3_b4x47")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_otihg"]
+random_pitch = 1.15
+streams_count = 1
+stream_0/stream = ExtResource("5_nbl15")
+stream_0/weight = 1.0
+
+[node name="BulletHellGoal" type="RigidBody2D" node_paths=PackedStringArray("evade_timer", "shape", "ring", "collision", "player_zone_collision", "collect_sound", "ready_sound", "mad_sound", "really_mad_sound")]
 collision_layer = 16
 collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_hkmxs")
@@ -64,6 +77,8 @@ collision = NodePath("CollisionShape2D")
 player_zone_collision = NodePath("PlayerZone/CollisionShape2D")
 collect_sound = NodePath("Collect")
 ready_sound = NodePath("Ready")
+mad_sound = NodePath("Mad")
+really_mad_sound = NodePath("ReallyMad")
 
 [node name="Ring" type="GPUParticles2D" parent="."]
 amount = 250
@@ -90,6 +105,16 @@ bus = &"sfx"
 
 [node name="Ready" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_k1ngn")
+bus = &"sfx"
+
+[node name="Mad" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_36p7w")
+pitch_scale = 0.2
+bus = &"sfx"
+
+[node name="ReallyMad" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_otihg")
+pitch_scale = 0.15
 bus = &"sfx"
 
 [node name="EvadeTimer" type="Timer" parent="."]

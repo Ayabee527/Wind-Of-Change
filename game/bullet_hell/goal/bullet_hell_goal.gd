@@ -15,12 +15,19 @@ signal activated()
 
 @export var collect_sound: AudioStreamPlayer
 @export var ready_sound: AudioStreamPlayer
+@export var mad_sound: AudioStreamPlayer
+@export var really_mad_sound: AudioStreamPlayer
 
 var wind_momma: WindMomma
 var player: Player
 
 var active: bool = true
 var dead: bool = false
+
+var mad: bool = false:
+	set = set_mad
+var really_mad: bool = false:
+	set = set_really_mad
 
 var magnetize: float = 0.0
 
@@ -38,6 +45,18 @@ func _physics_process(delta: float) -> void:
 		magnetize += delta
 	
 	magnetize_to_player(delta)
+
+func set_mad(new_mad: bool) -> void:
+	if new_mad:
+		shape.color = Color(0, 0.5, 0)
+		mad_sound.play()
+	mad = new_mad
+
+func set_really_mad(new_really_mad: bool) -> void:
+	if new_really_mad:
+		shape.color = Color(0, 0, 0)
+		really_mad_sound.play()
+	really_mad = new_really_mad
 
 func update_wind(direction: Vector2, speed: float) -> void:
 	constant_force = Vector2.ZERO

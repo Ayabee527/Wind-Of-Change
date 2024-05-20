@@ -1,6 +1,6 @@
 extends Node
 
-const CURRENT_GAME_VERSION: String = "1.1.2"
+const CURRENT_GAME_VERSION: String = "1.2"
 
 const SAVE_PATH: String = "user://data.cfg"
 const USER_NAME: String = "USER"
@@ -116,6 +116,17 @@ func check_compatibility(version: String) -> String:
 			#SilentWolf.Scores.wipe_leaderboard("daily_bullet")
 			
 			upgraded_version = "1.1.2"
+		"1.1.2":
+			var config = ConfigFile.new()
+			config.load(SAVE_PATH)
+			
+			config.set_value(USER_NAME, "window_borderless", Global.window_borderless)
+			
+			config.set_value(USER_NAME, "game_version", "1.2")
+			
+			config.save(SAVE_PATH)
+			
+			upgraded_version = "1.2"
 		CURRENT_GAME_VERSION:
 			upgraded_version = CURRENT_GAME_VERSION
 	
@@ -143,6 +154,7 @@ func save_config() -> void:
 		AudioServer.get_bus_index("music")
 	))
 	config.set_value(USER_NAME, "window_movement", Global.window_movement)
+	config.set_value(USER_NAME, "window_borderless", Global.window_borderless)
 	config.set_value(USER_NAME, "endless_highscores", Global.endless_highs)
 	config.set_value(USER_NAME, "bullet_highscores", Global.bullet_highs)
 	config.set_value(USER_NAME, "username", Global.username)
@@ -202,6 +214,7 @@ func load_config() -> void:
 	)
 	
 	Global.window_movement = config.get_value(USER_NAME, "window_movement")
+	Global.window_borderless = config.get_value(USER_NAME, "window_borderless")
 	Global.mouse_control = config.get_value(USER_NAME, "mouse_control")
 	Global.endless_highs = config.get_value(USER_NAME, "endless_highscores")
 	Global.bullet_highs = config.get_value(USER_NAME, "bullet_highscores")

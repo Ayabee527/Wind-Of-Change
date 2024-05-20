@@ -9,10 +9,15 @@ extends PanelContainer
 @export var online_menu: OnlineMenu
 
 func _ready() -> void:
+	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 	SceneSwitcher.switch_in()
 	DataLoader.load_config()
 	await get_tree().create_timer(0.5).timeout
 	AchievementHandler.load_achievements()
+	
+	DisplayServer.window_set_flag(
+		DisplayServer.WINDOW_FLAG_BORDERLESS, Global.window_borderless
+	)
 	
 	if OS.has_feature("web"):
 		quit_butt.hide()

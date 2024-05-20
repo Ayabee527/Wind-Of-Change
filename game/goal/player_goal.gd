@@ -33,9 +33,11 @@ signal collected()
 @export var player_collision: CollisionShape2D
 
 @export var collect_particles: GPUParticles2D
+@export var ready_particles: GPUParticles2D
 
 @export var explod_sound: AudioStreamPlayer
 @export var yipee_sound: AudioStreamPlayer
+@export var ready_sound: AudioStreamPlayer
 
 var combo: int = 0
 
@@ -59,7 +61,7 @@ func show_collect() -> void:
 	tween.set_parallel()
 	tween.tween_property(
 		shape, "modulate",
-		Color(1, 1, 1, 1), 3.0
+		Color(1, 1, 1, 0.75), 3.0
 	).from(Color(0, 1, 0, 0.5))
 	tween.tween_property(
 		shape, "scale",
@@ -70,6 +72,11 @@ func show_collect() -> void:
 	collect_particles.restart()
 	explod_sound.play()
 	yipee_sound.play()
+	
+	await tween.finished
+	ready_particles.restart()
+	shape.modulate.a = 1.0
+	ready_sound.play()
 
 func explode() -> void:
 	var owies = get_tree().get_nodes_in_group("owies")

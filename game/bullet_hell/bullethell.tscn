@@ -154,7 +154,7 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
-[node name="BulletHell" type="Node2D" node_paths=PackedStringArray("collect_panel", "death_bar", "timer_label", "gameover_label", "pause_butt", "retry_butt", "back_butt", "wind_momma", "bg_music", "survive_timer", "player", "goal")]
+[node name="BulletHell" type="Node2D" node_paths=PackedStringArray("collect_panel", "death_bar", "timer_label", "gameover_label", "pause_butt", "retry_butt", "back_butt", "wind_momma", "bg_music", "survive_timer", "stall_grace_timer", "player", "goal")]
 script = ExtResource("1_n4gij")
 collect_panel = NodePath("BGColor/CollectPanel")
 death_bar = NodePath("BGColor/DeathBar")
@@ -166,10 +166,15 @@ back_butt = NodePath("BGColor/MarginContainer/Back")
 wind_momma = NodePath("WindMomma")
 bg_music = NodePath("BGMusic")
 survive_timer = NodePath("SurviveTimer")
+stall_grace_timer = NodePath("StallGrace")
 player = NodePath("Player")
 goal = NodePath("BulletHellGoal")
 
 [node name="SurviveTimer" type="Timer" parent="."]
+
+[node name="StallGrace" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
 
 [node name="BGColor" type="PanelContainer" parent="."]
 clip_contents = true
@@ -442,6 +447,7 @@ visible = false
 
 [connection signal="game_over" from="." to="UI/PauseMenu" method="_on_bullet_hell_game_over"]
 [connection signal="timeout" from="SurviveTimer" to="." method="_on_survive_timer_timeout"]
+[connection signal="timeout" from="StallGrace" to="." method="_on_stall_grace_timeout"]
 [connection signal="pressed" from="BGColor/MarginContainer/Pause" to="UI/PauseMenu" method="_on_pause_pressed"]
 [connection signal="pressed" from="BGColor/MarginContainer/Retry" to="." method="_on_retry_pressed"]
 [connection signal="pressed" from="BGColor/MarginContainer/Back" to="." method="_on_back_pressed"]

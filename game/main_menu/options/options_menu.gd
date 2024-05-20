@@ -4,6 +4,7 @@ extends PanelContainer
 signal confirmed()
 
 @export var back_butt: Button
+@export var border_butt: CheckButton
 @export var window_move_butt: CheckButton
 @export var mouse_control_butt: CheckButton
 @export var master_volume: VolumeSlider
@@ -65,6 +66,7 @@ func initialize() -> void:
 		
 		back_butt.pressed.connect(_on_back_pressed)
 		window_move_butt.toggled.connect(_on_window_butt_toggled)
+		border_butt.toggled.connect(_on_border_butt_toggled)
 		mouse_control_butt.toggled.connect(_on_mouse_butt_toggled)
 		
 		master_volume.confirm_volume.connect(_on_volume_slider_confirm_volume)
@@ -81,6 +83,11 @@ func _on_back_pressed() -> void:
 func _on_volume_slider_confirm_volume() -> void:
 	sound.play()
 
+func _on_border_butt_toggled(toggled_on: bool) -> void:
+	Global.window_borderless = not toggled_on
+	DisplayServer.window_set_flag(
+		DisplayServer.WINDOW_FLAG_BORDERLESS, Global.window_borderless
+	)
 
 func _on_window_butt_toggled(toggled_on: bool) -> void:
 	Global.window_movement = toggled_on

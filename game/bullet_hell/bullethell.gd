@@ -13,6 +13,7 @@ signal game_over()
 @export var wind_momma: WindMomma
 @export var bg_music: AudioStreamPlayer
 @export var survive_timer: Timer
+@export var stall_grace_timer: Timer
 @export var player: Player
 @export var goal: BulletHellGoal
 
@@ -27,6 +28,7 @@ var window: Window
 var goal_ready: bool = false
 
 var game_overed: bool = false
+var punish: float = 0.0
 
 func _ready() -> void:
 	window = get_window()
@@ -37,7 +39,12 @@ func _process(delta: float) -> void:
 		if not goal_ready:
 			death_value -= delta * 2.5
 		else:
-			death_value += delta
+			punish += delta * 0.33
+			if punish > 5.0 and not goal.mad:
+				goal.mad = true
+			death_value += punish * delta
+			if punish > 5.0 and death_value >= 100.0 and not goal.really_mad:
+				goal.really_mad = true
 	
 	death_value = clamp(death_value, 0.0, 100.0)
 	
@@ -95,6 +102,8 @@ func contain_window() -> void:
 		window_velocity.y *= bounce_factor
 
 func collect_goal() -> void:
+	goal.mad = false
+	goal.really_mad = false
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(
@@ -177,13 +186,20 @@ func _on_survive_timer_timeout() -> void:
 
 
 func _on_bullet_hell_goal_collected() -> void:
+	stall_grace_timer.stop()
 	if not bg_music.playing:
 		bg_music.play()
 		survive_timer.start()
 		timer_label.show()
 	
 	if not game_overed:
-		death_value -= 30
+		print(punish)
+		if punish <= 5.0:
+			death_value -= 30
+		else:
+			if death_value < 100.0:
+				death_value -= 15
+		
 		collect_goal()
 		
 		wind_momma.wind_direction = Vector2.ZERO
@@ -206,7 +222,7 @@ func _on_player_hurt() -> void:
 
 
 func _on_bullet_hell_goal_activated() -> void:
-	goal_ready = true
+	stall_grace_timer.start()
 
 
 func _on_retry_pressed() -> void:
@@ -215,3 +231,8 @@ func _on_retry_pressed() -> void:
 
 func _on_back_pressed() -> void:
 	SceneSwitcher.switch_to("res://main_menu/main_menu.tscn")
+
+
+func _on_stall_grace_timeout() -> void:
+	goal_ready = true
+	punish = 0.5

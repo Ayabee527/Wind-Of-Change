@@ -7,6 +7,7 @@ var username: String = ""
 var game_version: String = "1.0.1"
 var mouse_control: bool = false
 var window_movement: bool = true
+var window_borderless: bool = false
 var sfx_volume: float
 var music_volume: float
 
