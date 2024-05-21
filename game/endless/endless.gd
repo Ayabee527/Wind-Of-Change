@@ -93,29 +93,27 @@ func over_game() -> void:
 	tween.set_parallel()
 	tween.tween_property(
 		multiplier_label, "modulate:a",
-		0.0, 5.0
+		0.0, 1.0
 	)
-	#tween.tween_property(
-		#pause_butt, "modulate:a",
-		#0.0, 5.0
-	#)
+	tween.tween_property(
+		pause_butt, "modulate:a",
+		0.0, 1.0
+	)
 	tween.play()
-	#tween.finished.connect(
-		#func():
-			#pause_butt.hide()
-	#)
+	tween.finished.connect(
+		func():
+			pause_butt.hide()
+	)
 	
 	pause_butt.hide()
 	
-	if not updating_score:
-		Global.latest_time = time_alive
-		#Global.latest_score = score_handler.score
-		Global.set_latest_score(score_handler.score)
-		
-		AchievementHandler.score = score_handler.score
-		AchievementHandler.check_game_over()
-		
-		allow_escape()
+	Global.latest_time = time_alive
+	#Global.latest_score = score_handler.score
+	AchievementHandler.score = score_handler.score
+	AchievementHandler.check_game_over()
+	await Global.set_latest_score(score_handler.score)
+	
+	allow_escape()
 
 func _on_player_bumped_wall(direction: Vector2) -> void:
 	AchievementHandler.wall_hits += 1
@@ -212,15 +210,16 @@ func allow_escape() -> void:
 
 func _on_score_handler_score_updated(new_score: int) -> void:
 	updating_score = false
+	return
 	
-	if game_overed:
-		Global.latest_time = time_alive
-		Global.latest_score = score_handler.score
-		
-		AchievementHandler.score = score_handler.score
-		AchievementHandler.check_game_over()
-		
-		allow_escape()
+	#if game_overed:
+		#Global.latest_time = time_alive
+		#Global.latest_score = score_handler.score
+		#
+		#AchievementHandler.score = score_handler.score
+		#AchievementHandler.check_game_over()
+		#
+		#allow_escape()
 
 
 func _on_retry_pressed() -> void:

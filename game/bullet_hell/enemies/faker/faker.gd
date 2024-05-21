@@ -63,14 +63,14 @@ func _on_bumper_body_entered(body: Node2D) -> void:
 
 func _on_dunkin_area_entered(area: Area2D) -> void:
 	if dunked:
-		print("DUNKED")
+		print_rich("[shake][wave][color=orange]DUNKED")
 		AchievementHandler.complete("Straight Up Ballin!")
 
 
 func _on_body_entered(body: Node) -> void:
 	if body is Player:
 		dunked = true
-		dunkin_collision.set_deferred("disabled", true)
+		dunkin_collision.set_deferred("disabled", false)
 		
 		clashes += 1
 		if clashes == 6:

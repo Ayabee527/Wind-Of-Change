@@ -29,6 +29,7 @@ func _ready() -> void:
 func set_latest_score(new_score: int) -> void:
 	latest_score = new_score
 	endless_highs.append( [latest_score, latest_time] )
+	print_rich("[wave][color=hotpink]Endless Score: ", [latest_score, latest_time])
 	
 	handle_endless_highs()
 	
@@ -41,10 +42,12 @@ func set_latest_score(new_score: int) -> void:
 	DataLoader.save_key("latest_endless_score", latest_score)
 	DataLoader.save_key("latest_endless_time", latest_time)
 	print_rich("[wave][color=hotpink]SAVED ENDLESS SCORES!")
+	print_rich("[wave][color=hotpink]", endless_highs)
 
 func set_latest_bullet_time(new_time: int) -> void:
 	latest_bullet_time = new_time
 	bullet_highs.append(latest_bullet_time)
+	print_rich("[wave][color=hotpink]Bullet Score: ", latest_bullet_time)
 	
 	handle_bullet_highs()
 	
@@ -56,6 +59,7 @@ func set_latest_bullet_time(new_time: int) -> void:
 	DataLoader.save_key("bullet_highscores", bullet_highs)
 	DataLoader.save_key("latest_bullet_time", latest_bullet_time)
 	print_rich("[wave][color=hotpink]SAVED BULLET SCORES!")
+	print_rich("[wave][color=hotpink]", bullet_highs)
 
 func handle_endless_highs() -> void:
 	# [score, time]

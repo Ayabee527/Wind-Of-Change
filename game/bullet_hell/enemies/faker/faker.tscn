@@ -142,6 +142,7 @@ collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Dunkin"]
 shape = SubResource("CircleShape2D_t7bu8")
+disabled = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="." to="StateMachine/Rushdown" method="_on_faker_body_entered"]

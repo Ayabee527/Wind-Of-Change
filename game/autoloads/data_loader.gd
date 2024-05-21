@@ -1,6 +1,6 @@
 extends Node
 
-const CURRENT_GAME_VERSION: String = "1.2"
+const CURRENT_GAME_VERSION: String = "1.2.1"
 
 const SAVE_PATH: String = "user://data.cfg"
 const USER_NAME: String = "USER"
@@ -128,6 +128,15 @@ func check_compatibility(version: String) -> String:
 			AchievementHandler.update_achievements()
 			
 			upgraded_version = "1.2"
+		"1.2":
+			var config = ConfigFile.new()
+			config.load(SAVE_PATH)
+			
+			config.set_value(USER_NAME, "game_version", "1.2.1")
+			
+			config.save(SAVE_PATH)
+			
+			upgraded_version = "1.2.1"
 		CURRENT_GAME_VERSION:
 			upgraded_version = CURRENT_GAME_VERSION
 	

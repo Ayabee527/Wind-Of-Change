@@ -43,6 +43,5 @@ func die() -> void:
 
 
 func _on_dunkin_area_entered(area: Area2D) -> void:
-	if dunked:
-		print_rich("[shake][wave][color=orange]DUNKED")
-		AchievementHandler.complete("Straight Up Ballin!")
+	print_rich("[shake][wave][color=orange]DUNKED")
+	AchievementHandler.complete("Straight Up Ballin!")
